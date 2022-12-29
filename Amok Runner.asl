@@ -45,15 +45,15 @@ startup
 	vars.completedSplits = new List<byte>();
 	
 	vars.splitnames = new List<string>()
-	{"Begin Clinic","Finish Clinic","Reach Train Station","Reach Axe Guy","Reach House","Reach Abandoned House Grounds","Start Lowering Ladder","Enter Abandoned House","Leave Abandoned House","Finish Encounter",
+	{"Begin Clinic","Finish Clinic","Reach Train Station","Reach House","Reach Abandoned House Grounds","Start Lowering Ladder","Enter Abandoned House","Leave Abandoned House","Finish Encounter",
 	"Reach Mansions Grounds","Enter Planet Building","Enter Mansion","Exit Mansion","Reach Town","Reach Clinic","Help Lady","RIP Lady","Begin Car Escape","Begin Cemetery","Begin Final Boss","Killed Final Boss","Reached Ship"};
 	
 	vars.splits = new List<byte>()
-	{1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23};
+	{1,2,3,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23};
 	
 	settings.Add("Auto", false, "Enable Autosplitter");
 	settings.CurrentDefaultParent = "Auto";
-		for(int i = 0; i < 23; i++){
+		for(int i = 0; i < 22; i++){
         	settings.Add("" + vars.splits[i].ToString(), false, "" + vars.splitnames[i].ToString());
     	}
 		settings.CurrentDefaultParent = null;
@@ -81,7 +81,7 @@ start
 split
 {
 	if(settings["Auto"]){
-		for(int i = 0; i < 23; i++){
+		for(int i = 0; i < 22; i++){
 				if(vars.splits.Contains(current.Level) && !vars.completedSplits.Contains(current.Level) && settings["" + current.Level] && current.Map != "AmokEntry"){
 				vars.completedSplits.Add(current.Level);
 				return true;
