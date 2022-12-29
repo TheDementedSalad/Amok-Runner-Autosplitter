@@ -60,9 +60,6 @@ startup
 
 	
 	settings.Add("End", true, "End Split - Always Active");
-	
-	
-
 }
 
 update
@@ -106,5 +103,5 @@ isLoading
 
 reset
 {
-	return current.Loading == 2 && old.Loading == 3 && current.Level == 0;
+	return current.Map == "Amoktown" && old.Map == "AmokEntry" && current.Level == 0;
 }
