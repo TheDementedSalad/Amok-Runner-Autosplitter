@@ -1,4 +1,4 @@
-// Amok Runner Load Remover & Autosplitter Version 1.0 28/12/2022
+// Amok Runner Load Remover & Autosplitter Version 1.0 30/12/2022
 // Supports Load Remover IGT
 // Splits for campaigns can be obtained from 
 // Script by TheDementedSalad
@@ -7,13 +7,14 @@
 
 state("Amok-Win64-Shipping", "SteamRelease")
 {
-	byte Loading 	:	0x46A6B10, 0x168, 0x8, 0x2218, 0x8;
-	byte Level 		:	0x4BAC550, 0x8, 0x8, 0x9A0, 0x70, 0x278, 0x30;
-	byte Final		:	0x498A010, 0x118, 0x280, 0x480, 0x78, 0x0, 0x0, 0x88, 0x8;
-	float X			:   0x4989A18, 0x98, 0x8C8, 0x3E8, 0x130, 0x10;
-	float Y			:   0x4989A18, 0x98, 0x8C8, 0x3E8, 0x130, 0x18;
-	float Z			:   0x4989A18, 0x98, 0x8C8, 0x3E8, 0x130, 0x14;
-	string128 Map 	:	0x4BAC598, 0xD28, 0x30, 0xF8, 0x20;
+	byte Loading 		:	0x46A6B10, 0x168, 0x8, 0x2218, 0x8;
+	byte Level 			:	0x4BAC550, 0x8, 0x8, 0x990, 0x250, 0x30;
+	byte Final			:	0x498A010, 0x118, 0x280, 0x480, 0x78, 0x0, 0x0, 0x88, 0x8;
+	byte Blackscreen	:	0x4989A18, 0xD2;
+	float X				:   0x4989A18, 0x98, 0x8C8, 0x3E8, 0x130, 0x10;
+	float Y				:	0x4989A18, 0x98, 0x8C8, 0x3E8, 0x130, 0x18;
+	float Z				:	0x4989A18, 0x98, 0x8C8, 0x3E8, 0x130, 0x14;
+	string128 Map 		:	0x4BAC598, 0xD28, 0x30, 0xF8, 0x20;
 
 }
 
@@ -29,6 +30,8 @@ init
 
 startup
 {
+	vars.ASLVersion = "ASL Version 1.0 - Dec 30, 2022";
+	
 	if (timer.CurrentTimingMethod == TimingMethod.RealTime){ // stolen from dude simulator 3, basically asks the runner to set their livesplit to game time
 		var timingMessage = MessageBox.Show (
 			"This game uses Time without Loads (Game Time) as the main timing method.\n"+
@@ -50,6 +53,8 @@ startup
 	
 	vars.splits = new List<byte>()
 	{1,2,3,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23};
+	
+	settings.Add(vars.ASLVersion, false);
 	
 	settings.Add("Auto", false, "Enable Autosplitter");
 	settings.CurrentDefaultParent = "Auto";
@@ -98,7 +103,7 @@ split
 
 isLoading
 {
-	return current.Loading == 3 || current.Map == "AmokEntry";
+	return current.Loading == 3 || current.Map == "AmokEntry" || current.Blackscreen == 23;
 }
 
 reset
