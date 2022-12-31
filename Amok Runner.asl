@@ -30,7 +30,7 @@ init
 
 startup
 {
-	vars.ASLVersion = "ASL Version 1.0 - Dec 30, 2022";
+	vars.ASLVersion = "ASL Version 1.0.6 - 31/12/22";
 	
 	if (timer.CurrentTimingMethod == TimingMethod.RealTime){ // stolen from dude simulator 3, basically asks the runner to set their livesplit to game time
 		var timingMessage = MessageBox.Show (
@@ -47,20 +47,40 @@ startup
 	
 	vars.completedSplits = new List<byte>();
 	
-	vars.splitnames = new List<string>()
-	{"Begin Clinic","Finish Clinic","Reach Train Station","Reach House","Reach Abandoned House Grounds","Start Lowering Ladder","Enter Abandoned House","Leave Abandoned House","Finish Encounter",
-	"Reach Mansions Grounds","Enter Planet Building","Enter Mansion","Exit Mansion","Reach Town","Reach Clinic","Help Lady","RIP Lady","Begin Car Escape","Begin Cemetery","Begin Final Boss","Killed Final Boss","Reached Ship"};
-	
-	vars.splits = new List<byte>()
-	{1,2,3,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23};
-	
 	settings.Add(vars.ASLVersion, false);
 	
 	settings.Add("Auto", false, "Enable Autosplitter");
-	settings.CurrentDefaultParent = "Auto";
-		for(int i = 0; i < 22; i++){
-        	settings.Add("" + vars.splits[i].ToString(), false, "" + vars.splitnames[i].ToString());
-    	}
+	vars.Levels = new Dictionary<string,string>
+	{
+		{"1","Begin Clinic"},
+		{"2","Finish Clinic"},
+		{"3","Reach Train Station"},
+		{"5","Reach House"},
+		{"6","Reach Abandoned House Grounds"},
+		{"7","Start Lowering Ladder"},
+		{"8","Enter Abandoned House"},
+		{"9","Leave Abandoned House"},
+		{"10","Finish Encounter"},
+		{"11","Reach Mansions Grounds"},
+		{"12","Enter Planet Building"},
+		{"13","Enter Mansion"},
+		{"14","Exit Mansion"},
+		{"15","Reach Town"},
+		{"16","Reach Clinic"},
+		{"17","Help Lady"},
+		{"18","RIP Lady"},
+		{"19","Begin Car Escape"},
+		{"20","Begin Cemetery"},
+		{"21","Begin Final Boss"},
+		{"22","Killed Final Boss"},
+		{"23","Reached Ship"},
+	};
+	
+	 foreach (var Tag in vars.Levels)
+		{
+			settings.Add(Tag.Key, false, Tag.Value, "Auto");
+    	};
+
 		settings.CurrentDefaultParent = null;
 
 	
@@ -85,14 +105,15 @@ start
 
 split
 {
-	if(settings["Auto"]){
-		for(int i = 0; i < 22; i++){
-				if(vars.splits.Contains(current.Level) && !vars.completedSplits.Contains(current.Level) && settings["" + current.Level] && current.Map != "AmokEntry"){
-				vars.completedSplits.Add(current.Level);
-				return true;
-			}
+	vars.LevelStr = current.Level.ToString();
+	
+		if(settings["Auto"]){
+		if((settings[vars.LevelStr]) && (!vars.completedSplits.Contains(current.Level))){
+			vars.completedSplits.Add(current.Level);
+			return true;
 		}
 	}
+
 	
 	if(current.Level == 23 && current.X > -57145f && current.X < -57140f && current.Final == 1 && old.Final == 6){
 			return true;
