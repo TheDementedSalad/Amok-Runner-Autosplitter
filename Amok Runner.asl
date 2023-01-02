@@ -1,4 +1,4 @@
-// Amok Runner Load Remover & Autosplitter Version 1.0 30/12/2022
+// Amok Runner Load Remover & Autosplitter Version 1.1.0 01/01/2023
 // Supports Load Remover IGT
 // Splits for campaigns can be obtained from 
 // Script by TheDementedSalad
@@ -30,7 +30,7 @@ init
 
 startup
 {
-	vars.ASLVersion = "ASL Version 1.0.6 - 31/12/22";
+	vars.ASLVersion = "ASL Version 1.1.0 - 01/01/23";
 	
 	if (timer.CurrentTimingMethod == TimingMethod.RealTime){ // stolen from dude simulator 3, basically asks the runner to set their livesplit to game time
 		var timingMessage = MessageBox.Show (
@@ -124,7 +124,7 @@ split
 
 isLoading
 {
-	return current.Loading == 3 || current.Map == "AmokEntry" || current.Blackscreen == 23;
+	return current.Loading == 3 || current.Map == "AmokEntry" || current.Blackscreen == 23 && current.Level == 0;
 }
 
 reset
