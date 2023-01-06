@@ -1,4 +1,4 @@
-// Amok Runner Load Remover & Autosplitter Version 1.1.0 01/01/2023
+// Amok Runner Load Remover & Autosplitter Version 1.1.6 - 06/01/23
 // Supports Load Remover IGT
 // Splits for campaigns can be obtained from 
 // Script by TheDementedSalad
@@ -7,7 +7,6 @@
 
 state("Amok-Win64-Shipping", "SteamRelease")
 {
-	byte Loading 		:	0x46A6B10, 0x168, 0x8, 0x2218, 0x8;
 	byte Level 			:	0x4BAC550, 0x8, 0x8, 0x990, 0x250, 0x30;
 	byte Final			:	0x498A010, 0x118, 0x280, 0x480, 0x78, 0x0, 0x0, 0x88, 0x8;
 	byte Blackscreen	:	0x4989A18, 0xD2;
@@ -15,6 +14,7 @@ state("Amok-Win64-Shipping", "SteamRelease")
 	float Y				:	0x4989A18, 0x98, 0x8C8, 0x3E8, 0x130, 0x18;
 	float Z				:	0x4989A18, 0x98, 0x8C8, 0x3E8, 0x130, 0x14;
 	string128 Map 		:	0x4BAC598, 0xD28, 0x30, 0xF8, 0x20;
+	byte Loading		:   0x46A6F84;
 
 }
 
@@ -30,7 +30,7 @@ init
 
 startup
 {
-	vars.ASLVersion = "ASL Version 1.1.0 - 01/01/23";
+	vars.ASLVersion = "ASL Version 1.1.6 - 06/01/23";
 	
 	if (timer.CurrentTimingMethod == TimingMethod.RealTime){ // stolen from dude simulator 3, basically asks the runner to set their livesplit to game time
 		var timingMessage = MessageBox.Show (
@@ -100,7 +100,7 @@ update
 
 start
 {
-	return current.Loading == 2 && old.Loading == 3 && current.Level == 0;
+	return current.Loading == 0 && old.Loading == 1 && current.Level == 0;
 }
 
 split
@@ -124,7 +124,7 @@ split
 
 isLoading
 {
-	return current.Loading == 3 || current.Map == "AmokEntry" || current.Blackscreen == 23 && current.Level == 0;
+	return current.Loading == 1 || current.Map == "AmokEntry" || current.Blackscreen == 23 && current.Level == 0;
 }
 
 reset
