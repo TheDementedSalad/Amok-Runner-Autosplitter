@@ -1,4 +1,4 @@
-# Amok-Runner-Autosplitter
+# Amok Runner Autosplitter
 This is done for free, but if you'd like to support me you can here. https://ko-fi.com/thedementedsalad
 
 # Instructions
