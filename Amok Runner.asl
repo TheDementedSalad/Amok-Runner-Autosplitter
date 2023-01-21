@@ -1,4 +1,4 @@
-// Amok Runner Load Remover & Autosplitter Version 1.1.6 - 06/01/23
+// Amok Runner Load Remover & Autosplitter Version 1.1.6 - 21/01/23
 // Supports Load Remover IGT
 // Splits for campaigns can be obtained from 
 // Script by TheDementedSalad
@@ -9,13 +9,22 @@ state("Amok-Win64-Shipping", "SteamRelease")
 {
 	byte Level 			:	0x4BAC550, 0x8, 0x8, 0x990, 0x250, 0x30;
 	byte Final			:	0x498A010, 0x118, 0x280, 0x480, 0x78, 0x0, 0x0, 0x88, 0x8;
-	byte Blackscreen	:	0x4989A18, 0xD2;
 	float X				:   0x4989A18, 0x98, 0x8C8, 0x3E8, 0x130, 0x10;
 	float Y				:	0x4989A18, 0x98, 0x8C8, 0x3E8, 0x130, 0x18;
 	float Z				:	0x4989A18, 0x98, 0x8C8, 0x3E8, 0x130, 0x14;
 	string128 Map 		:	0x4BAC598, 0xD28, 0x30, 0xF8, 0x20;
 	byte Loading		:   0x46A6F84;
+}
 
+state("Amok-Win64-Shipping", "20/01/23")
+{
+	byte Level 			:	0x4BC06D0, 0x8, 0x8, 0x990, 0x250, 0x30;
+	byte Final			:	0x499DFB0, 0x118, 0x280, 0x480, 0x78, 0x0, 0x0, 0x88, 0x8;
+	float X				:   0x499D918, 0xC8;
+	float Y				:	0x499D918, 0xD0;
+	float Z				:	0x499D918, 0xCC;
+	string128 Map 		:	0x4BC0718, 0xD28, 0x30, 0xF8, 0x20;
+	byte Loading		:   0x46BAEB4;
 }
 
 init
@@ -24,6 +33,9 @@ init
 	{
 		case (84217856):
 			version = "SteamRelease";
+			break;
+		case (84312064):
+			version = "20/01/23";
 			break;
 	}
 }
@@ -84,12 +96,12 @@ startup
 		settings.CurrentDefaultParent = null;
 
 	
-	settings.Add("End", true, "End Split - Always Active");
+	settings.Add("End", true, "End Split- Always Active");
 }
 
 update
 {
-	// Uncomment debug information in the event of an update.
+	//Uncomment debug information in the event of an update.
 	//print(modules.First().ModuleMemorySize.ToString());
 	
 	if(timer.CurrentPhase == TimerPhase.NotRunning)
@@ -124,7 +136,7 @@ split
 
 isLoading
 {
-	return current.Loading == 1 || current.Map == "AmokEntry" || current.Blackscreen == 23 && current.Level == 0;
+	return current.Loading == 1 || current.Map == "AmokEntry";
 }
 
 reset
